@@ -1,1 +1,69 @@
-<h1>hello this is the homepage</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calorie Counter</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    />
+</head>
+
+<body>
+
+  <header class="navbar-fixed">
+    <nav>
+      <div class="nav-wrapper teal">
+        <ul>
+          <li>
+            <a href="/" class="left brand-logo">&nbsp;&nbsp;Calorie Counter</a>
+          </li>
+        </ul>
+        <ul class="right">
+          <li><a href="/about">About</a></li>
+        </ul>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container">
+    <div class="row justify-content-center">
+        <form method="POST">
+            {% csrf_token %}
+            <input type="text" name="query" placeholder="search for your food...">
+            <button type="submit">Search</button>
+        </form>
+    </div>
+
+    {{api}}
+    
+    <h3>Logged Foods</h3>
+    <h5>Let's count those calories you fatass</h5>
+    <div class="row">
+        <div class="col s12">
+            <table class="striped bordered">
+                <thread>
+                    <tr>
+                        <th>Food Name</th>
+                        <th>Calories</th>
+                        <th>Proteins(g)</th>
+                        <th>Carbs(g)</th>
+                        <th>Fats(g)</th>
+                    </tr>
+                </thread>
+             
+            </table>
+        </div>
+    </div>
+
+  </main>
+  
+  <footer class="page-footer teal">
+    <div class="right">
+      All Rights Reserved, &copy; 2022 Calorie Counter ;
+    </div>
+  </footer>
+</body>
+</html>
