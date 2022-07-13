@@ -1,82 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Calorie Counter</title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
     />
-</head>
+  </head>
 
-<body>
-
-  <header class="navbar-fixed">
-    <nav>
-      <div class="nav-wrapper teal">
-        <ul>
-          <li>
-            <a href="/" class="left brand-logo">&nbsp;&nbsp;Calorie Counter</a>
-          </li>
-        </ul>
-        <ul class="right">
-          <li><a href="/about">About</a></li>
-        </ul>
-      </div>
-    </nav>
-  </header>
-
-  <main class="container">
-    <div class="row justify-content-center">
-        <form method="POST">
-            {% csrf_token %}
-            <input type="text" name="query" placeholder="search for your food...">
-            <button type="submit">Search</button>
-        </form>
-    </div>
-    
-    {% if api %}
-    {% if api == "Oops! Error"%}
-    <div class="alert alert-warning">Oh no! Something went wrong</div>
-    {% else %}
-    <h3>Logged Foods</h3>
-    <h5>Let's count those calories you fatass</h5>
-    <div class="row">
-        <div class="col s12">
-            <table class="striped bordered">
-                <thread>
-                    <tr>
-                        <th>Food Name</th>
-                        <th>Calories</th>
-                        <th>Proteins(g)</th>
-                        <th>Carbs(g)</th>
-                        <th>Fats(g)</th>
-                    </tr>
-                </thread>
-                <tbody>
-                    <tr>
-                        <td>{{ api.0.name }}</td>
-                        <td>{{ api.0.calories }}</td>
-                        <td>{{ api.0.protein_g }}</td>
-                        <td>{{ api.0.carbohydrates_total_g }}</td>
-                        <td>{{ api.0.fat_total_g }}</td>
-                    </tr>
-                </tbody>
-             
-            </table>
+  <body>
+    <header class="navbar-fixed">
+      <nav>
+        <div class="nav-wrapper teal">
+          <ul>
+            <li>
+              <a href="/" class="left brand-logo"
+                >&nbsp;&nbsp;Calorie Counter</a
+              >
+            </li>
+          </ul>
+          <ul class="right">
+            <li><a href="/about">About</a></li>
+          </ul>
         </div>
-    </div>
-    {% endif %}
-    {% endif %}
+      </nav>
+    </header>
 
-  </main>
-  
+    <main class="container">
+      <div class="row justify-content-center">
+        <form method="POST">
+          {% csrf_token %}
+          <input
+            type="text"
+            name="query"
+            placeholder="search for your food..."
+          />
+          <button type="submit">Search</button>
+        </form>
+      </div>
+
+      {% if api %} {% if api == "Oops! Error"%}
+      <div class="alert alert-warning">Oh no! Something went wrong</div>
+      {% else %}
+      <h3>Logged Foods</h3>
+      <h5>Let's count those calories you fatass</h5>
+      <div class="row">
+        <div class="col s12">
+          <table id="table" class="striped bordered">
+            <thread>
+              <tr>
+                <th>Food Name</th>
+                <th>Calories</th>
+                <th>Proteins(g)</th>
+                <th>Carbs(g)</th>
+                <th>Fats(g)</th>
+              </tr>
+            </thread>
+            <tbody>
+              <tr>
+                <td>{{ api.0.name }}</td>
+                <td>{{ api.0.calories }}</td>
+                <td>{{ api.0.protein_g }}</td>
+                <td>{{ api.0.carbohydrates_total_g }}</td>
+                <td>{{ api.0.fat_total_g }}</td>
+              </tr>
+
+              <tr>
+                <td id="name"><b>Total</b></td>
+                <td id="totalCalories"><b></b></td>
+                <td id="totalProtein"><b></b></td>
+                <td id="totalCarbs"><b></b></td>
+                <td id="totalFats"><b></b></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      {% endif %} {% endif %}
+    </main>
+  </body>
+  <script>
+    var table = document.getElementById("table");
+    var calories = 0, protien = 0, carbs = 0, fats = 0;
+
+    for (var i = 1; i < table.rows.length - 1; i++) {
+      console.log(table.rows[i].cells[1].innerHTML);
+      calories += parseFloat(table.rows[i].cells[1].innerHTML);
+      protein += parseFloat(table.rows[i].cells[2].innerHTML);
+      carbs += parseFloat(table.rows[i].cells[3].innerHTML);
+      fats += parseFloat(table.rows[i].cells[4].innerHTML);
+    }
+
+    document.getElementById("totalCalories").innerHTML = calories;
+    document.getElementById("totalProtein").innerHTML = protein;
+    document.getElementById("totalCarbs").innerHTML = carbs;
+    document.getElementById("totalFats").innerHTML = fats;
+  </script>
+
   <footer class="page-footer teal">
-    <div class="right">
-      All Rights Reserved, &copy; 2022 Calorie Counter ;
-    </div>
+    <div class="right">All Rights Reserved, &copy; 2022 Calorie Counter ;</div>
   </footer>
-</body>
 </html>
