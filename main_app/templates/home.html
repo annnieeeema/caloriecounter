@@ -36,9 +36,11 @@
             <button type="submit">Search</button>
         </form>
     </div>
-
-    {{api}}
     
+    {% if api %}
+    {% if api == "Oops! Error"%}
+    <div class="alert alert-warning">Oh no! Something went wrong</div>
+    {% else %}
     <h3>Logged Foods</h3>
     <h5>Let's count those calories you fatass</h5>
     <div class="row">
@@ -53,10 +55,21 @@
                         <th>Fats(g)</th>
                     </tr>
                 </thread>
+                <tbody>
+                    <tr>
+                        <td>{{ api.0.name }}</td>
+                        <td>{{ api.0.calories }}</td>
+                        <td>{{ api.0.protein_g }}</td>
+                        <td>{{ api.0.carbohydrates_total_g }}</td>
+                        <td>{{ api.0.fat_total_g }}</td>
+                    </tr>
+                </tbody>
              
             </table>
         </div>
     </div>
+    {% endif %}
+    {% endif %}
 
   </main>
   
